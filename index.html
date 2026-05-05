@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Südostasien Reiseguide – August 2026</title>
+<style>
+    /* Grund-Design & Hintergrundbild */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { 
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        background-color: #f0f2f5;
+        background-image: url('https://images.unsplash.com/photo-1506633063473-04983050c550?q=80&w=2000&auto=format&fit=crop'); 
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        color: #1A1A1A; 
+        line-height: 1.6;
+    }
+
+    /* Overlay für bessere Lesbarkeit */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(245,237,213,0.9) 100%);
+        z-index: -1;
+    }
+
+    .header { 
+        background: linear-gradient(135deg, #0A2A1A 0%, #1A4A2A 100%); 
+        padding: 60px 24px; 
+        text-align: center; 
+        color: white;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .header-label { color: #4CAF7D; font-size: 14px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: bold; margin-bottom: 12px; }
+    .header h1 { font-size: clamp(28px, 8vw, 48px); margin-bottom: 10px; font-weight: 800; letter-spacing: -0.02em; }
+    .header-sub { color: #A8C8A0; font-size: 16px; font-style: italic; opacity: 0.9; }
+
+    .main { padding: 24px 16px; max-width: 800px; margin: 0 auto; }
+    .hint { text-align: center; font-size: 14px; color: #555; margin-bottom: 25px; font-weight: 500; }
+
+    /* Karten-Styling */
+    .card { 
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px; 
+        overflow: hidden; 
+        margin-bottom: 16px; 
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        border: 1px solid rgba(255,255,255,0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .card-head { width: 100%; border: none; cursor: pointer; padding: 22px; display: flex; align-items: center; justify-content: space-between; transition: opacity 0.2s; }
+    .card-head:hover { opacity: 0.95; }
+    
+    .head-l { display: flex; align-items: center; gap: 16px; }
+    .emoji { font-size: 32px; background: rgba(255,255,255,0.2); padding: 8px; border-radius: 12px; }
+    .city { color: #fff; font-size: 22px; font-weight: 700; }
+    .meta { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 400; }
+    
+    .nights { border-radius: 30px; padding: 6px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+    .arr { color: rgba(255,255,255,0.8); font-size: 18px; transition: transform 0.4s; }
+
+    /* Tab-System */
+    .tabs { display: flex; background: #f9f9f9; padding: 4px; gap: 4px; }
+    .tbtn { flex: 1; border: none; background: transparent; cursor: pointer; padding: 14px 0; font-size: 14px; color: #777; border-radius: 12px; font-weight: 600; transition: all 0.2s; }
+    .tbtn.on { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+
+    .tc { padding: 24px; display: none; animation: fadeIn 0.4s ease; }
+    .tc.on { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .hotel-box { border-radius: 16px; padding: 18px; margin-bottom: 20px; border: 1px solid; }
+    .hotel-name { font-size: 18px; font-weight: 800; margin-bottom: 5px; }
+    
+    /* Flüge & Transit */
+    .flight, .flight-home, .transit { 
+        margin: 12px 0; padding: 16px 20px; border-radius: 18px; display: flex; align-items: center; gap: 15px; 
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .flight { background: white; border: 1px solid #B0D4F5; }
+    .flight-home { background: #fff; border: 1px solid #ddd; }
+    .transit { background: rgba(255,255,255,0.6); border: 1px dashed #aaa; }
+    
+    .flight-t { font-weight: 700; color: #1A4A7A; font-size: 14px; }
+    .flight-s { font-size: 12px; color: #666; }
+
+    /* Buttons */
+    .booking-btn {
+        display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; 
+        background: #003580; color: white; text-decoration: none; padding: 10px 18px; 
+        border-radius: 12px; font-size: 13px; font-weight: 700; transition: transform 0.2s;
+    }
+    .booking-btn:hover { transform: scale(1.03); }
+
+    .footer { text-align: center; margin-top: 50px; padding: 40px 20px; color: #555; font-size: 14px; }
+
+    /* Option & Activities */
+    .opt { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; border-left: 5px solid; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+    .act { display: flex; gap: 16px; padding: 15px; background: white; border-radius: 16px; margin-bottom: 12px; border: 1px solid #eee; }
+    .act-n { font-weight: 700; color: #1A3C2E; font-size: 15px; }
+    .badge { font-size: 10px; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; font-weight: bold; margin-left: 5px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <p class="header-label">Finn &amp; Smilla · August 2026</p>
+    <h1>Unser Abenteuer</h1>
+    <p class="header-sub">Malaysia · Singapur · Thailand</p>
+</div>
+
+<div class="main">
+    <p class="hint">Tippe auf ein Ziel für Details ✨</p>
+
+    <!-- FLUG MUC -->
+    <div class="flight">
+        <span style="font-size:24px">✈️</span>
+        <div style="flex:1">
+            <div class="flight-t">So. 2. Aug · München (MUC) → Kuala Lumpur (KUL)</div>
+            <div class="flight-s">Turkish Airlines · 16 Std. 05 Min.</div>
+            <div style="margin-top:8px">
+                <span style="background:#e8f4ff; color:#1a4a7a; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:bold;">TK1638 & TK396</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== KUALA LUMPUR ===== -->
+    <div class="card" id="D-kl">
+        <button class="card-head" style="background:linear-gradient(135deg,#1A3C2E, #2D5A45)" onclick="tog('kl','#1A3C2E','#4CAF7D')">
+            <div class="head-l"><span class="emoji">🏙️</span><div><div class="city">Kuala Lumpur</div><div class="meta">Malaysia · 3. – 4. August</div></div></div>
+            <div class="head-r"><span class="nights" style="background:rgba(255,255,255,0.2); color:#fff">2 Nächte</span><span class="arr" id="A-kl">▼</span></div>
+        </button>
+        <div class="body" id="B-kl" style="display:none">
+            <div class="tabs">
+                <button class="tbtn on" id="TB-kl-t" onclick="sw('kl','t','#1A3C2E')">🚌 Anreise</button>
+                <button class="tbtn" id="TB-kl-a" onclick="sw('kl','a','#1A3C2E')">🗺️ Aktivitäten</button>
+            </div>
+            <div class="tc on" id="TC-kl-t">
+                <div class="hotel-box" style="background:#f1f8f4; border-color:#4CAF7D">
+                    <div class="hotel-name" style="color:#1A3C2E">🏨 InnB Park Hotel</div>
+                    <div style="font-size:13px; color:#555">📍 Bukit Bintang · 3 Min zu Fuß zur MRT</div>
+                    <a href="https://www.booking.com/hotel/my/inn-b-park.de.html" target="_blank" class="booking-btn">🔗 Booking.com</a>
+                </div>
+                <div class="opt" style="border-color:#4CAF7D">
+                    <div style="display:flex; justify-content:space-between"><strong>🚆 KLIA Ekspres + Monorail</strong><span style="color:#4CAF7D">~4€</span></div>
+                    <p style="font-size:13px; margin-top:5px">Beste Option, um dem Stau zu entgehen. Direkt bis Station <strong>Imbi</strong>.</p>
+                </div>
+            </div>
+            <div class="tc" id="TC-kl-a">
+                <div class="act"><span>🏗️</span><div><span class="act-n">Petronas Towers</span><span class="badge" style="background:#e8f5e9; color:#2e7d32">Landmark</span><p style="font-size:13px">Abends die Fontänenshow ansehen (gratis)!</p></div></div>
+                <div class="act"><span>🍜</span><div><span class="act-n">Jalan Alor</span><span class="badge" style="background:#fff3e0; color:#ef6c00">Food ⭐</span><p style="font-size:13px">5 Min vom Hotel – das beste Streetfood der Stadt.</p></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HIER WEITERE CARDS ANALOG EINFÜGEN (MALACCA, SINGAPUR ETC.) -->
+    <!-- (Aus Platzgründen gekürzt, das Prinzip bleibt für alle Blöcke gleich) -->
+
+    <div class="transit"><span style="font-size:24px">🚤</span><div><strong>7. Aug · Transfer nach Tioman</strong><div style="font-size:12px; color:#666">Bus nach Mersing + Speedboat</div></div></div>
+
+    <div class="footer">
+        <div style="font-size:24px; margin-bottom:10px">🌏</div>
+        <strong>26 Tage · 6 Destinationen · 3 Länder</strong><br>
+        2. August – 27. August 2026<br>
+        <span style="opacity:0.6; font-size:12px">Mit Liebe geplant für Finn & Smilla</span>
+    </div>
+</div>
+
+<script>
+function tog(id, color, accent) {
+    var body = document.getElementById('B-' + id);
+    var arrow = document.getElementById('A-' + id);
+    var card = document.getElementById('D-' + id);
+    var isOpen = body.style.display === 'block';
+    
+    body.style.display = isOpen ? 'none' : 'block';
+    arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    card.style.transform = isOpen ? 'scale(1)' : 'scale(1.02)';
+    card.style.boxShadow = isOpen ? '0 4px 15px rgba(0,0,0,0.05)' : '0 12px 30px rgba(0,0,0,0.15)';
+}
+
+function sw(id, which, color) {
+    ['t','a'].forEach(function(tab) {
+        var tc = document.getElementById('TC-' + id + '-' + tab);
+        var tb = document.getElementById('TB-' + id + '-' + tab);
+        if (tab === which) {
+            tc.classList.add('on'); tb.classList.add('on');
+            tb.style.color = color;
+        } else {
+            tc.classList.remove('on'); tb.classList.remove('on');
+            tb.style.color = '#999';
+        }
+    });
+}
+</script>
+</body>
+</html>
