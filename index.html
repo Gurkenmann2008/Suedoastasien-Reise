@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Southeast Asia · August 2026</title>
+<title>Südostasien · August 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -178,19 +178,25 @@ main {
     position: relative;
     display: grid;
     gap: 60px;
+    padding: 0 20px;
 }
 
 .timeline::before {
     content: '';
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
     width: 2px;
-    height: 100%;
     background: linear-gradient(180deg, var(--accent) 0%, rgba(212, 165, 116, 0.2) 100%);
+    transform: translateX(-50%);
 }
 
 @media (max-width: 768px) {
+    .timeline {
+        padding: 0 20px;
+    }
+    
     .timeline::before {
         left: 20px;
     }
@@ -494,6 +500,222 @@ footer {
     background: var(--accent-dark);
 }
 
+/* ADMIN PANEL */
+.admin-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: var(--accent);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 16px rgba(212, 165, 116, 0.3);
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.admin-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(212, 165, 116, 0.4);
+}
+
+.admin-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background: white;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    transition: right 0.4s ease;
+    overflow-y: auto;
+    z-index: 1000;
+    border-left: 1px solid var(--border);
+}
+
+.admin-panel.active {
+    right: 0;
+}
+
+.admin-header {
+    background: var(--primary);
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.admin-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.admin-content {
+    padding: 20px;
+}
+
+.admin-section {
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-section:last-child {
+    border-bottom: none;
+}
+
+.admin-section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.admin-stop-selector {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.stop-option {
+    padding: 10px 15px;
+    background: rgba(212, 165, 116, 0.1);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.stop-option:hover {
+    background: rgba(212, 165, 116, 0.2);
+}
+
+.stop-option.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent-dark);
+}
+
+.upload-group {
+    margin-bottom: 15px;
+}
+
+.upload-label {
+    display: block;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-input-wrapper input[type="file"] {
+    display: none;
+}
+
+.file-input-button {
+    padding: 10px 15px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    flex: 1;
+}
+
+.file-input-button:hover {
+    background: var(--accent-dark);
+}
+
+.file-name {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.preview-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 10px;
+    border: 1px solid var(--border);
+}
+
+.admin-action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.admin-action-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-save {
+    background: var(--success);
+    color: white;
+}
+
+.btn-save:hover {
+    opacity: 0.9;
+}
+
+.btn-clear {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-clear:hover {
+    opacity: 0.9;
+}
+
+.admin-info {
+    background: rgba(212, 165, 116, 0.1);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .admin-panel {
+        width: 100%;
+        right: -100%;
+    }
+}
+
 </style>
 </head>
 <body>
@@ -552,10 +774,10 @@ footer {
                 </div>
 
                 <div class="action-buttons">
-                    <a href="MUC-KUL_Flug.pdf" target="_blank" class="btn btn-primary">
+                    <a href="pdfs/01-MUC-KUL-Flug.pdf" target="_blank" class="btn btn-primary">
                         <span>🎫</span> Flugticket
                     </a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="pdfs/02-KUL-Unterkunft.pdf" target="_blank" class="btn btn-secondary">
                         <span>🛏️</span> Hotel
                     </a>
                 </div>
@@ -587,10 +809,10 @@ footer {
                 </div>
 
                 <div class="action-buttons">
-                    <a href="Malakka_Hotel.pdf" target="_blank" class="btn btn-primary">
+                    <a href="pdfs/03-Malacca-Hotel.pdf" target="_blank" class="btn btn-primary">
                         <span>🛏️</span> Hotel buchen
                     </a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="pdfs/04-Malacca-Bus.pdf" target="_blank" class="btn btn-secondary">
                         <span>🎫</span> Busticket
                     </a>
                 </div>
@@ -622,10 +844,10 @@ footer {
                 </div>
 
                 <div class="action-buttons">
-                    <a href="KohSamui_Hotel.pdf" target="_blank" class="btn btn-primary">
+                    <a href="pdfs/05-Tioman-Resort.pdf" target="_blank" class="btn btn-primary">
                         <span>🛏️</span> Resort buchen
                     </a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="pdfs/06-Tioman-Faehre.pdf" target="_blank" class="btn btn-secondary">
                         <span>🎫</span> Fährticket
                     </a>
                 </div>
@@ -657,10 +879,10 @@ footer {
                 </div>
 
                 <div class="action-buttons">
-                    <a href="SIN-USM_Flug.pdf" target="_blank" class="btn btn-primary">
+                    <a href="pdfs/07-KUL-SIN-Flug.pdf" target="_blank" class="btn btn-primary">
                         <span>🎫</span> Flugticket
                     </a>
-                    <a href="Singapur_Hotel.pdf" target="_blank" class="btn btn-primary">
+                    <a href="pdfs/08-Singapore-Hotel.pdf" target="_blank" class="btn btn-primary">
                         <span>🛏️</span> Hotel
                     </a>
                 </div>
@@ -692,10 +914,10 @@ footer {
                 </div>
 
                 <div class="action-buttons">
-                    <a href="#" class="btn btn-secondary">
+                    <a href="pdfs/09-SIN-KUL-Flug.pdf" target="_blank" class="btn btn-secondary">
                         <span>🎫</span> Flugticket
                     </a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="pdfs/10-KUL-Hotel-Return.pdf" target="_blank" class="btn btn-secondary">
                         <span>🛏️</span> Hotel
                     </a>
                 </div>
@@ -727,10 +949,10 @@ footer {
                 </div>
 
                 <div class="action-buttons">
-                    <a href="USM-BKK_Flug.pdf" target="_blank" class="btn btn-primary">
+                    <a href="pdfs/11-KUL-BKK-Flug.pdf" target="_blank" class="btn btn-primary">
                         <span>🎫</span> Flugticket
                     </a>
-                    <a href="#" class="btn btn-secondary">
+                    <a href="pdfs/12-Bangkok-Hotel.pdf" target="_blank" class="btn btn-secondary">
                         <span>🛏️</span> Hotel
                     </a>
                 </div>
@@ -758,7 +980,7 @@ footer {
                 </div>
 
                 <div class="action-buttons">
-                    <a href="BKK-STR_Flug.pdf" target="_blank" class="btn btn-primary">
+                    <a href="pdfs/13-BKK-STR-Flug.pdf" target="_blank" class="btn btn-primary">
                         <span>🎫</span> Rückflugticket
                     </a>
                 </div>
@@ -777,6 +999,221 @@ footer {
 <footer>
     <p>✈️ Eine Reise durch Südostasien · August 2026 · Made with ❤️</p>
 </footer>
+
+<!-- ADMIN PANEL -->
+<button class="admin-toggle" id="adminToggle" title="Admin-Modus">⚙️</button>
+
+<div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+        <h3>Admin Panel</h3>
+        <button class="admin-close" id="adminClose">✕</button>
+    </div>
+    <div class="admin-content">
+        
+        <!-- Select Stop -->
+        <div class="admin-section">
+            <div class="admin-section-title">📍 Stop auswählen</div>
+            <div class="admin-stop-selector" id="stopSelector"></div>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="admin-section">
+            <div class="admin-section-title">🖼️ Foto hochladen</div>
+            <div class="upload-group">
+                <label class="upload-label">Stop-Bild</label>
+                <div class="file-input-wrapper">
+                    <button class="file-input-button" onclick="document.getElementById('imageInput').click()">Bild wählen</button>
+                </div>
+                <input type="file" id="imageInput" accept="image/*">
+                <img id="imagePreview" class="preview-image" style="display:none;">
+                <div class="file-name" id="imageName"></div>
+            </div>
+        </div>
+
+        <!-- PDF Uploads -->
+        <div class="admin-section">
+            <div class="admin-section-title">📄 PDF-Dateien</div>
+            <div class="upload-group">
+                <label class="upload-label">PDF 1</label>
+                <div class="file-input-wrapper">
+                    <button class="file-input-button" onclick="document.getElementById('pdf1Input').click()">PDF wählen</button>
+                </div>
+                <input type="file" id="pdf1Input" accept=".pdf">
+                <div class="file-name" id="pdf1Name"></div>
+            </div>
+            <div class="upload-group">
+                <label class="upload-label">PDF 2</label>
+                <div class="file-input-wrapper">
+                    <button class="file-input-button" onclick="document.getElementById('pdf2Input').click()">PDF wählen</button>
+                </div>
+                <input type="file" id="pdf2Input" accept=".pdf">
+                <div class="file-name" id="pdf2Name"></div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="admin-section">
+            <div class="admin-action-buttons">
+                <button class="btn-save" onclick="saveStopData()">💾 Speichern</button>
+                <button class="btn-clear" onclick="clearStopData()">🗑️ Löschen</button>
+            </div>
+            <div class="admin-info" style="margin-top: 15px;">
+                💡 Wähle einen Stop, lade Fotos und PDFs hoch, dann speichern. Die Daten werden im Browser gespeichert.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+// Struktur der Stops
+const stops = [
+    { id: 1, name: 'Kuala Lumpur' },
+    { id: 2, name: 'Malacca' },
+    { id: 3, name: 'Pulau Tioman' },
+    { id: 4, name: 'Singapore' },
+    { id: 5, name: 'Kuala Lumpur (Return)' },
+    { id: 6, name: 'Bangkok' },
+    { id: 7, name: 'Stuttgart' }
+];
+
+let selectedStop = 1;
+
+// Initialize Admin Panel
+document.addEventListener('DOMContentLoaded', function() {
+    initializeAdminPanel();
+    loadStopData();
+});
+
+function initializeAdminPanel() {
+    // Toggle Admin Panel
+    document.getElementById('adminToggle').addEventListener('click', function() {
+        document.getElementById('adminPanel').classList.toggle('active');
+    });
+    
+    document.getElementById('adminClose').addEventListener('click', function() {
+        document.getElementById('adminPanel').classList.remove('active');
+    });
+
+    // Create Stop Selector
+    const selector = document.getElementById('stopSelector');
+    stops.forEach(stop => {
+        const btn = document.createElement('button');
+        btn.className = 'stop-option' + (stop.id === 1 ? ' active' : '');
+        btn.textContent = `#${stop.id} ${stop.name}`;
+        btn.onclick = () => selectStop(stop.id);
+        selector.appendChild(btn);
+    });
+
+    // File Input Listeners
+    document.getElementById('imageInput').addEventListener('change', handleImageUpload);
+    document.getElementById('pdf1Input').addEventListener('change', handlePdf1Upload);
+    document.getElementById('pdf2Input').addEventListener('change', handlePdf2Upload);
+}
+
+function selectStop(stopId) {
+    selectedStop = stopId;
+    
+    // Update UI
+    document.querySelectorAll('.stop-option').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx + 1 === stopId);
+    });
+
+    loadStopData();
+}
+
+function handleImageUpload(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            document.getElementById('imagePreview').src = event.target.result;
+            document.getElementById('imagePreview').style.display = 'block';
+            document.getElementById('imageName').textContent = '✓ ' + file.name;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+function handlePdf1Upload(e) {
+    const file = e.target.files[0];
+    if (file) {
+        document.getElementById('pdf1Name').textContent = '✓ ' + file.name;
+    }
+}
+
+function handlePdf2Upload(e) {
+    const file = e.target.files[0];
+    if (file) {
+        document.getElementById('pdf2Name').textContent = '✓ ' + file.name;
+    }
+}
+
+function saveStopData() {
+    const stopKey = `stop_${selectedStop}`;
+    const data = {
+        image: document.getElementById('imagePreview').src || '',
+        pdf1: document.getElementById('pdf1Name').textContent,
+        pdf2: document.getElementById('pdf2Name').textContent
+    };
+
+    localStorage.setItem(stopKey, JSON.stringify(data));
+    
+    // Update page
+    applyStopData();
+    
+    alert(`✓ Daten für Stop #${selectedStop} gespeichert!`);
+}
+
+function clearStopData() {
+    const stopKey = `stop_${selectedStop}`;
+    if (confirm(`Stop #${selectedStop} wirklich löschen?`)) {
+        localStorage.removeItem(stopKey);
+        document.getElementById('imagePreview').style.display = 'none';
+        document.getElementById('imageName').textContent = '';
+        document.getElementById('pdf1Name').textContent = '';
+        document.getElementById('pdf2Name').textContent = '';
+        document.getElementById('imageInput').value = '';
+        document.getElementById('pdf1Input').value = '';
+        document.getElementById('pdf2Input').value = '';
+        applyStopData();
+    }
+}
+
+function loadStopData() {
+    const stopKey = `stop_${selectedStop}`;
+    const data = JSON.parse(localStorage.getItem(stopKey)) || { image: '', pdf1: '', pdf2: '' };
+
+    if (data.image) {
+        document.getElementById('imagePreview').src = data.image;
+        document.getElementById('imagePreview').style.display = 'block';
+    } else {
+        document.getElementById('imagePreview').style.display = 'none';
+    }
+
+    document.getElementById('imageName').textContent = '';
+    document.getElementById('pdf1Name').textContent = data.pdf1 || '';
+    document.getElementById('pdf2Name').textContent = data.pdf2 || '';
+}
+
+function applyStopData() {
+    const stopElements = document.querySelectorAll('.stop');
+    stopElements.forEach((el, idx) => {
+        const stopNum = idx + 1;
+        const stopKey = `stop_${stopNum}`;
+        const data = JSON.parse(localStorage.getItem(stopKey)) || { image: '' };
+
+        if (data.image) {
+            el.querySelector('.stop-image').src = data.image;
+        }
+    });
+}
+
+// Load all stops on page load
+window.addEventListener('load', function() {
+    applyStopData();
+});
+</script>
 
 </body>
 </html>
