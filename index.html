@@ -3,203 +3,773 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Südostasien Reiseguide – August 2026</title>
+<title>Southeast Asia · August 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-    /* Grund-Design & Hintergrundbild */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body { 
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-        background-color: #f0f2f5;
-        background-image: url('https://images.unsplash.com/photo-1506633063473-04983050c550?q=80&w=2000&auto=format&fit=crop'); 
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-        color: #1A1A1A; 
-        line-height: 1.6;
+:root {
+    --bg: #f4efe6;
+    --bg-card: #faf6ef;
+    --ink: #1a1f1a;
+    --ink-soft: #4a544a;
+    --muted: #8a8478;
+    --accent: #d97548;
+    --accent-deep: #b85530;
+    --jade: #5a7a5e;
+    --sand: #e8dfce;
+    --line: #d4c9b3;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.bg-art {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: multiply;
+}
+
+main {
+    position: relative;
+    z-index: 2;
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+}
+
+.eyebrow {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--accent-deep);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.eyebrow::before, .eyebrow::after {
+    content: "";
+    height: 1px;
+    width: 24px;
+    background: var(--accent-deep);
+}
+
+h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-align: center;
+    color: var(--ink);
+    margin-bottom: 8px;
+    font-variation-settings: "opsz" 144;
+}
+
+h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent-deep);
+}
+
+.subtitle {
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.25rem;
+    color: var(--ink-soft);
+    margin-bottom: 48px;
+}
+
+.meta-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 80px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+}
+
+.meta-item {
+    flex: 1;
+    text-align: center;
+    padding: 0 16px;
+    border-right: 1px solid var(--line);
+}
+
+.meta-item:last-child { border-right: none; }
+
+.meta-item .label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.meta-item .value {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.5rem;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+
+.section-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 48px;
+}
+
+.timeline { position: relative; }
+
+.stop {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 24px;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.stop:hover {
+    transform: translateX(4px);
+    border-color: var(--accent);
+    box-shadow: 0 8px 24px rgba(217, 117, 72, 0.08);
+}
+
+.stop-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+}
+
+.stop-content { min-width: 0; }
+
+.stop-city {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.75rem;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+}
+
+.stop-country {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.stop-transport {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--jade);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.transport-line {
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--jade);
+}
+
+.stop-meta {
+    text-align: right;
+    min-width: 110px;
+}
+
+.stop-dates {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 4px;
+    white-space: nowrap;
+}
+
+.stop-nights {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.stop-nights strong {
+    color: var(--accent-deep);
+    font-weight: 600;
+}
+
+.stop-details {
+    grid-column: 1 / -1;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.stop.expanded .stop-details {
+    max-height: 500px;
+}
+
+.details-section {
+    margin-bottom: 16px;
+}
+
+.details-section h4 {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.hotel-info, .activity-item {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.hotel-info a, .activity-item a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.hotel-info a:hover, .activity-item a:hover {
+    text-decoration: underline;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.action-btn:hover {
+    background: var(--accent-deep);
+}
+
+.action-btn.secondary {
+    background: var(--sand);
+    color: var(--ink);
+    border: 1px solid var(--line);
+}
+
+.action-btn.secondary:hover {
+    background: var(--line);
+}
+
+.expand-btn {
+    font-size: 0.8rem;
+    color: var(--accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+}
+
+.expand-btn:hover {
+    color: var(--accent-deep);
+}
+
+.stop.home {
+    background: transparent;
+    border: 1px dashed var(--line);
+    margin-top: 24px;
+}
+
+.stop.home .stop-city {
+    color: var(--ink-soft);
+    font-style: italic;
+    font-weight: 400;
+}
+
+.quote {
+    margin: 80px auto 0;
+    max-width: 560px;
+    text-align: center;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.4rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    padding: 40px 0;
+}
+
+.quote::before, .quote::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+    margin: 0 auto 24px;
+}
+
+.quote::after { margin: 24px auto 0; }
+
+.quote .author {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+    main { padding: 50px 24px 80px; }
+    .meta-bar { flex-wrap: wrap; }
+    .meta-item { flex: 1 1 50%; padding: 12px; border-right: none; border-bottom: 1px solid var(--line); }
+    .stop { grid-template-columns: 50px 1fr; padding: 20px; gap: 16px; }
+    .stop-meta {
+        grid-column: 1 / -1;
+        text-align: left;
+        border-top: 1px dashed var(--line);
+        padding-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
     }
+    .stop-num { font-size: 2rem; }
+    .stop-city { font-size: 1.4rem; }
+    .button-group { flex-direction: column; }
+    .action-btn { width: 100%; justify-content: center; }
+}
 
-    /* Overlay für bessere Lesbarkeit */
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(245,237,213,0.9) 100%);
-        z-index: -1;
-    }
+.stop {
+    opacity: 0;
+    animation: fadeUp 0.6s ease-out forwards;
+}
 
-    .header { 
-        background: linear-gradient(135deg, #0A2A1A 0%, #1A4A2A 100%); 
-        padding: 60px 24px; 
-        text-align: center; 
-        color: white;
-        border-bottom-left-radius: 40px;
-        border-bottom-right-radius: 40px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
+.stop:nth-child(1) { animation-delay: 0.05s; }
+.stop:nth-child(2) { animation-delay: 0.12s; }
+.stop:nth-child(3) { animation-delay: 0.19s; }
+.stop:nth-child(4) { animation-delay: 0.26s; }
+.stop:nth-child(5) { animation-delay: 0.33s; }
+.stop:nth-child(6) { animation-delay: 0.40s; }
+.stop:nth-child(7) { animation-delay: 0.47s; }
 
-    .header-label { color: #4CAF7D; font-size: 14px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: bold; margin-bottom: 12px; }
-    .header h1 { font-size: clamp(28px, 8vw, 48px); margin-bottom: 10px; font-weight: 800; letter-spacing: -0.02em; }
-    .header-sub { color: #A8C8A0; font-size: 16px; font-style: italic; opacity: 0.9; }
-
-    .main { padding: 24px 16px; max-width: 800px; margin: 0 auto; }
-    .hint { text-align: center; font-size: 14px; color: #555; margin-bottom: 25px; font-weight: 500; }
-
-    /* Karten-Styling */
-    .card { 
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-radius: 20px; 
-        overflow: hidden; 
-        margin-bottom: 16px; 
-        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        border: 1px solid rgba(255,255,255,0.3);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    }
-
-    .card-head { width: 100%; border: none; cursor: pointer; padding: 22px; display: flex; align-items: center; justify-content: space-between; transition: opacity 0.2s; }
-    .card-head:hover { opacity: 0.95; }
-    
-    .head-l { display: flex; align-items: center; gap: 16px; }
-    .emoji { font-size: 32px; background: rgba(255,255,255,0.2); padding: 8px; border-radius: 12px; }
-    .city { color: #fff; font-size: 22px; font-weight: 700; }
-    .meta { color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 400; }
-    
-    .nights { border-radius: 30px; padding: 6px 14px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-    .arr { color: rgba(255,255,255,0.8); font-size: 18px; transition: transform 0.4s; }
-
-    /* Tab-System */
-    .tabs { display: flex; background: #f9f9f9; padding: 4px; gap: 4px; }
-    .tbtn { flex: 1; border: none; background: transparent; cursor: pointer; padding: 14px 0; font-size: 14px; color: #777; border-radius: 12px; font-weight: 600; transition: all 0.2s; }
-    .tbtn.on { background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-
-    .tc { padding: 24px; display: none; animation: fadeIn 0.4s ease; }
-    .tc.on { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    .hotel-box { border-radius: 16px; padding: 18px; margin-bottom: 20px; border: 1px solid; }
-    .hotel-name { font-size: 18px; font-weight: 800; margin-bottom: 5px; }
-    
-    /* Flüge & Transit */
-    .flight, .flight-home, .transit { 
-        margin: 12px 0; padding: 16px 20px; border-radius: 18px; display: flex; align-items: center; gap: 15px; 
-        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    .flight { background: white; border: 1px solid #B0D4F5; }
-    .flight-home { background: #fff; border: 1px solid #ddd; }
-    .transit { background: rgba(255,255,255,0.6); border: 1px dashed #aaa; }
-    
-    .flight-t { font-weight: 700; color: #1A4A7A; font-size: 14px; }
-    .flight-s { font-size: 12px; color: #666; }
-
-    /* Buttons */
-    .booking-btn {
-        display: inline-flex; align-items: center; gap: 8px; margin-top: 15px; 
-        background: #003580; color: white; text-decoration: none; padding: 10px 18px; 
-        border-radius: 12px; font-size: 13px; font-weight: 700; transition: transform 0.2s;
-    }
-    .booking-btn:hover { transform: scale(1.03); }
-
-    .footer { text-align: center; margin-top: 50px; padding: 40px 20px; color: #555; font-size: 14px; }
-
-    /* Option & Activities */
-    .opt { background: #fff; border-radius: 14px; padding: 16px; margin-bottom: 12px; border-left: 5px solid; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-    .act { display: flex; gap: 16px; padding: 15px; background: white; border-radius: 16px; margin-bottom: 12px; border: 1px solid #eee; }
-    .act-n { font-weight: 700; color: #1A3C2E; font-size: 15px; }
-    .badge { font-size: 10px; padding: 2px 8px; border-radius: 8px; text-transform: uppercase; font-weight: bold; margin-left: 5px; }
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 </style>
 </head>
 <body>
 
-<div class="header">
-    <p class="header-label">Finn &amp; Smilla · August 2026</p>
-    <h1>Unser Abenteuer</h1>
-    <p class="header-sub">Malaysia · Singapur · Thailand</p>
-</div>
+<svg class="bg-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#f4efe6"/>
+            <stop offset="50%" stop-color="#ead9bf"/>
+            <stop offset="100%" stop-color="#e8c8a0"/>
+        </linearGradient>
+        <radialGradient id="sunRad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#f0a060" stop-opacity="0.5"/>
+            <stop offset="60%" stop-color="#d97548" stop-opacity="0.15"/>
+            <stop offset="100%" stop-color="#d97548" stop-opacity="0"/>
+        </radialGradient>
+    </defs>
 
-<div class="main">
-    <p class="hint">Tippe auf ein Ziel für Details ✨</p>
+    <rect width="1440" height="900" fill="url(#sky)"/>
 
-    <!-- FLUG MUC -->
-    <div class="flight">
-        <span style="font-size:24px">✈️</span>
-        <div style="flex:1">
-            <div class="flight-t">So. 2. Aug · München (MUC) → Kuala Lumpur (KUL)</div>
-            <div class="flight-s">Turkish Airlines · 16 Std. 05 Min.</div>
-            <div style="margin-top:8px">
-                <span style="background:#e8f4ff; color:#1a4a7a; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:bold;">TK1638 & TK396</span>
-            </div>
+    <circle cx="1100" cy="320" r="280" fill="url(#sunRad)"/>
+    <circle cx="1100" cy="320" r="90" fill="#e89868" opacity="0.4"/>
+
+    <path d="M0,520 Q180,420 360,460 T720,440 T1080,470 T1440,450 L1440,900 L0,900 Z" fill="#a89678" opacity="0.35"/>
+    <path d="M0,580 Q200,500 400,540 T800,520 T1200,560 T1440,540 L1440,900 L0,900 Z" fill="#7a8470" opacity="0.4"/>
+    <path d="M0,660 Q160,580 320,620 T640,610 T960,640 T1280,620 T1440,640 L1440,900 L0,900 Z" fill="#5a6a5a" opacity="0.45"/>
+    <path d="M0,740 L1440,740 L1440,900 L0,900 Z" fill="#3a4a48" opacity="0.5"/>
+
+    <g transform="translate(80, 700)" opacity="0.5">
+        <path d="M0,0 Q-20,-80 -10,-160 Q-40,-130 -60,-90 Q-50,-50 -30,-30 Z" fill="#2a3a30"/>
+        <path d="M0,0 Q20,-90 40,-170 Q10,-140 -15,-100 Q-10,-60 0,-30 Z" fill="#2a3a30"/>
+        <path d="M0,0 Q60,-60 100,-120 Q80,-80 50,-50 Q20,-30 0,-20 Z" fill="#2a3a30"/>
+        <path d="M0,0 Q-60,-50 -110,-100 Q-90,-60 -60,-40 Q-30,-20 0,-15 Z" fill="#2a3a30"/>
+        <rect x="-3" y="-10" width="6" height="80" fill="#2a3a30"/>
+    </g>
+
+    <g transform="translate(1340, 720)" opacity="0.5">
+        <path d="M0,0 Q-25,-90 -15,-180 Q-50,-150 -70,-100 Q-55,-55 -30,-30 Z" fill="#2a3a30"/>
+        <path d="M0,0 Q25,-100 50,-190 Q15,-160 -20,-120 Q-12,-70 0,-30 Z" fill="#2a3a30"/>
+        <path d="M0,0 Q70,-70 120,-140 Q95,-90 60,-55 Q25,-30 0,-20 Z" fill="#2a3a30"/>
+        <rect x="-3" y="-10" width="6" height="90" fill="#2a3a30"/>
+    </g>
+
+    <g opacity="0.4" fill="none" stroke="#3a4a3a">
+        <path d="M400,280 q5,-8 10,0 q5,-8 10,0" stroke-width="1.5"/>
+        <path d="M460,260 q4,-6 8,0 q4,-6 8,0" stroke-width="1.2"/>
+        <path d="M520,300 q3,-5 6,0 q3,-5 6,0" stroke-width="1"/>
+    </g>
+</svg>
+
+<main>
+
+    <div class="eyebrow">Travel Journal · Vol. 01</div>
+
+    <h1>Southeast <em>Asia</em></h1>
+
+    <p class="subtitle">August 2026 — eine Reise in sechs Kapiteln</p>
+
+    <div class="meta-bar">
+        <div class="meta-item">
+            <div class="label">Abreise</div>
+            <div class="value">02 Aug</div>
+        </div>
+        <div class="meta-item">
+            <div class="label">Rückkehr</div>
+            <div class="value">27 Aug</div>
+        </div>
+        <div class="meta-item">
+            <div class="label">Tage</div>
+            <div class="value">26</div>
+        </div>
+        <div class="meta-item">
+            <div class="label">Länder</div>
+            <div class="value">3</div>
         </div>
     </div>
 
-    <!-- ===== KUALA LUMPUR ===== -->
-    <div class="card" id="D-kl">
-        <button class="card-head" style="background:linear-gradient(135deg,#1A3C2E, #2D5A45)" onclick="tog('kl','#1A3C2E','#4CAF7D')">
-            <div class="head-l"><span class="emoji">🏙️</span><div><div class="city">Kuala Lumpur</div><div class="meta">Malaysia · 3. – 4. August</div></div></div>
-            <div class="head-r"><span class="nights" style="background:rgba(255,255,255,0.2); color:#fff">2 Nächte</span><span class="arr" id="A-kl">▼</span></div>
-        </button>
-        <div class="body" id="B-kl" style="display:none">
-            <div class="tabs">
-                <button class="tbtn on" id="TB-kl-t" onclick="sw('kl','t','#1A3C2E')">🚌 Anreise</button>
-                <button class="tbtn" id="TB-kl-a" onclick="sw('kl','a','#1A3C2E')">🗺️ Aktivitäten</button>
-            </div>
-            <div class="tc on" id="TC-kl-t">
-                <div class="hotel-box" style="background:#f1f8f4; border-color:#4CAF7D">
-                    <div class="hotel-name" style="color:#1A3C2E">🏨 InnB Park Hotel</div>
-                    <div style="font-size:13px; color:#555">📍 Bukit Bintang · 3 Min zu Fuß zur MRT</div>
-                    <a href="https://www.booking.com/hotel/my/inn-b-park.de.html" target="_blank" class="booking-btn">🔗 Booking.com</a>
-                </div>
-                <div class="opt" style="border-color:#4CAF7D">
-                    <div style="display:flex; justify-content:space-between"><strong>🚆 KLIA Ekspres + Monorail</strong><span style="color:#4CAF7D">~4€</span></div>
-                    <p style="font-size:13px; margin-top:5px">Beste Option, um dem Stau zu entgehen. Direkt bis Station <strong>Imbi</strong>.</p>
+    <p class="section-title">— The Itinerary —</p>
+
+    <div class="timeline">
+
+        <article class="stop">
+            <div class="stop-num">01</div>
+            <div class="stop-content">
+                <div class="stop-city">Kuala Lumpur</div>
+                <div class="stop-country">Malaysia</div>
+                <div class="stop-transport">
+                    <span class="transport-line"></span>
+                    ✈️ Flug ab München
                 </div>
             </div>
-            <div class="tc" id="TC-kl-a">
-                <div class="act"><span>🏗️</span><div><span class="act-n">Petronas Towers</span><span class="badge" style="background:#e8f5e9; color:#2e7d32">Landmark</span><p style="font-size:13px">Abends die Fontänenshow ansehen (gratis)!</p></div></div>
-                <div class="act"><span>🍜</span><div><span class="act-n">Jalan Alor</span><span class="badge" style="background:#fff3e0; color:#ef6c00">Food ⭐</span><p style="font-size:13px">5 Min vom Hotel – das beste Streetfood der Stadt.</p></div></div>
+            <div class="stop-meta">
+                <div class="stop-dates">02 — 05 Aug</div>
+                <div class="stop-nights"><strong>3</strong> Nächte</div>
             </div>
-        </div>
+            <div class="stop-details">
+                <div class="details-section">
+                    <h4>🏨 Unterkunft</h4>
+                    <div class="hotel-info">
+                        <strong>The Majestic Hotel</strong><br>
+                        <a href="https://www.booking.com" target="_blank">📍 Auf Booking.com buchen</a> | 
+                        <a href="https://maps.google.com/maps?q=The+Majestic+Hotel+Kuala+Lumpur" target="_blank">🗺️ Maps</a>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h4>🎯 Aktivitäten</h4>
+                    <div class="activity-item">• Petronas Twin Towers besuchen</div>
+                    <div class="activity-item">• Bukit Bintang Shopping District erkunden</div>
+                    <div class="activity-item">• <a href="https://goo.gl/maps/KLCCPark" target="_blank">KLCC Park</a> spazieren</div>
+                </div>
+                <div class="button-group">
+                    <a href="#" class="action-btn">🎫 Flugticket</a>
+                    <a href="https://www.booking.com" target="_blank" class="action-btn">🛏️ Hotel buchen</a>
+                    <a href="https://www.google.com/maps" target="_blank" class="action-btn secondary">🗺️ Karte öffnen</a>
+                </div>
+            </div>
+            <button class="expand-btn" onclick="toggleStop(this)">+ Details</button>
+        </article>
+
+        <article class="stop">
+            <div class="stop-num">02</div>
+            <div class="stop-content">
+                <div class="stop-city">Malacca</div>
+                <div class="stop-country">Malaysia</div>
+                <div class="stop-transport">
+                    <span class="transport-line"></span>
+                    🚌 Bus ab Kuala Lumpur
+                </div>
+            </div>
+            <div class="stop-meta">
+                <div class="stop-dates">05 — 07 Aug</div>
+                <div class="stop-nights"><strong>2</strong> Nächte</div>
+            </div>
+            <div class="stop-details">
+                <div class="details-section">
+                    <h4>🏨 Unterkunft</h4>
+                    <div class="hotel-info">
+                        <strong>Boutique Guesthouse</strong><br>
+                        <a href="https://www.booking.com" target="_blank">📍 Auf Booking.com buchen</a> | 
+                        <a href="https://maps.google.com/maps?q=Malacca+Boutique+Guesthouse" target="_blank">🗺️ Maps</a>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h4>🎯 Aktivitäten</h4>
+                    <div class="activity-item">• Historische Altstadt von Malacca</div>
+                    <div class="activity-item">• Christ Church besuchen</div>
+                    <div class="activity-item">• Straßenverkauf mit Essen genießen</div>
+                </div>
+                <div class="button-group">
+                    <a href="#" class="action-btn">🎫 Busticket</a>
+                    <a href="https://www.booking.com" target="_blank" class="action-btn">🛏️ Hotel buchen</a>
+                </div>
+            </div>
+            <button class="expand-btn" onclick="toggleStop(this)">+ Details</button>
+        </article>
+
+        <article class="stop">
+            <div class="stop-num">03</div>
+            <div class="stop-content">
+                <div class="stop-city">Pulau Tioman</div>
+                <div class="stop-country">via Mersing</div>
+                <div class="stop-transport">
+                    <span class="transport-line"></span>
+                    🚌 Bus + ⛴️ Fähre
+                </div>
+            </div>
+            <div class="stop-meta">
+                <div class="stop-dates">07 — 11 Aug</div>
+                <div class="stop-nights"><strong>4</strong> Nächte</div>
+            </div>
+            <div class="stop-details">
+                <div class="details-section">
+                    <h4>🏨 Unterkunft</h4>
+                    <div class="hotel-info">
+                        <strong>Tioman Island Resort</strong><br>
+                        <a href="https://www.booking.com" target="_blank">📍 Auf Booking.com buchen</a> | 
+                        <a href="https://maps.google.com/maps?q=Tioman+Island+Resort" target="_blank">🗺️ Maps</a>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h4>🎯 Aktivitäten</h4>
+                    <div class="activity-item">• Schnorcheln & Tauchen</div>
+                    <div class="activity-item">• Wanderungen im Dschungel</div>
+                    <div class="activity-item">• Strände erforschen</div>
+                </div>
+                <div class="button-group">
+                    <a href="#" class="action-btn">🎫 Fähreticket</a>
+                    <a href="https://www.booking.com" target="_blank" class="action-btn">🛏️ Resort buchen</a>
+                </div>
+            </div>
+            <button class="expand-btn" onclick="toggleStop(this)">+ Details</button>
+        </article>
+
+        <article class="stop">
+            <div class="stop-num">04</div>
+            <div class="stop-content">
+                <div class="stop-city">Singapore</div>
+                <div class="stop-country">Singapur</div>
+                <div class="stop-transport">
+                    <span class="transport-line"></span>
+                    ⛴️ Fähre + 🚌 Bus ab Mersing
+                </div>
+            </div>
+            <div class="stop-meta">
+                <div class="stop-dates">11 — 17 Aug</div>
+                <div class="stop-nights"><strong>6</strong> Nächte</div>
+            </div>
+            <div class="stop-details">
+                <div class="details-section">
+                    <h4>🏨 Unterkunft</h4>
+                    <div class="hotel-info">
+                        <strong>Marina Bay Hotel</strong><br>
+                        <a href="https://www.booking.com" target="_blank">📍 Auf Booking.com buchen</a> | 
+                        <a href="https://maps.google.com/maps?q=Marina+Bay+Singapore" target="_blank">🗺️ Maps</a>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h4>🎯 Aktivitäten</h4>
+                    <div class="activity-item">• Marina Bay Sands besuchen</div>
+                    <div class="activity-item">• Gardens by the Bay erkunden</div>
+                    <div class="activity-item">• Chinatown spaziergang</div>
+                    <div class="activity-item">• Night Safari</div>
+                </div>
+                <div class="button-group">
+                    <a href="#" class="action-btn">🎫 Fähreticket</a>
+                    <a href="https://www.booking.com" target="_blank" class="action-btn">🛏️ Hotel buchen</a>
+                </div>
+            </div>
+            <button class="expand-btn" onclick="toggleStop(this)">+ Details</button>
+        </article>
+
+        <article class="stop">
+            <div class="stop-num">05</div>
+            <div class="stop-content">
+                <div class="stop-city">Kuala Lumpur</div>
+                <div class="stop-country">Malaysia · Return</div>
+                <div class="stop-transport">
+                    <span class="transport-line"></span>
+                    ✈️ Flug ab Singapur
+                </div>
+            </div>
+            <div class="stop-meta">
+                <div class="stop-dates">17 — 24 Aug</div>
+                <div class="stop-nights"><strong>7</strong> Nächte</div>
+            </div>
+            <div class="stop-details">
+                <div class="details-section">
+                    <h4>🏨 Unterkunft</h4>
+                    <div class="hotel-info">
+                        <strong>Cyberjaya Modern Hotel</strong><br>
+                        <a href="https://www.booking.com" target="_blank">📍 Auf Booking.com buchen</a> | 
+                        <a href="https://maps.google.com/maps?q=Cyberjaya+Kuala+Lumpur" target="_blank">🗺️ Maps</a>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h4>🎯 Aktivitäten</h4>
+                    <div class="activity-item">• Batu Caves erkunden</div>
+                    <div class="activity-item">• Mosques besichtigung</div>
+                    <div class="activity-item">• Souvenirs kaufen</div>
+                </div>
+                <div class="button-group">
+                    <a href="#" class="action-btn">🎫 Flugticket</a>
+                    <a href="https://www.booking.com" target="_blank" class="action-btn">🛏️ Hotel buchen</a>
+                </div>
+            </div>
+            <button class="expand-btn" onclick="toggleStop(this)">+ Details</button>
+        </article>
+
+        <article class="stop">
+            <div class="stop-num">06</div>
+            <div class="stop-content">
+                <div class="stop-city">Bangkok</div>
+                <div class="stop-country">Thailand</div>
+                <div class="stop-transport">
+                    <span class="transport-line"></span>
+                    ✈️ Flug ab Kuala Lumpur
+                </div>
+            </div>
+            <div class="stop-meta">
+                <div class="stop-dates">24 — 27 Aug</div>
+                <div class="stop-nights"><strong>3</strong> Nächte</div>
+            </div>
+            <div class="stop-details">
+                <div class="details-section">
+                    <h4>🏨 Unterkunft</h4>
+                    <div class="hotel-info">
+                        <strong>Sukhumvit Boutique Hotel</strong><br>
+                        <a href="https://www.booking.com" target="_blank">📍 Auf Booking.com buchen</a> | 
+                        <a href="https://maps.google.com/maps?q=Sukhumvit+Bangkok" target="_blank">🗺️ Maps</a>
+                    </div>
+                </div>
+                <div class="details-section">
+                    <h4>🎯 Aktivitäten</h4>
+                    <div class="activity-item">• Grand Palace besuchen</div>
+                    <div class="activity-item">• Floating Markets</div>
+                    <div class="activity-item">• Muay Thai Show</div>
+                    <div class="activity-item">• Street Food Tour</div>
+                </div>
+                <div class="button-group">
+                    <a href="#" class="action-btn">🎫 Flugticket</a>
+                    <a href="https://www.booking.com" target="_blank" class="action-btn">🛏️ Hotel buchen</a>
+                </div>
+            </div>
+            <button class="expand-btn" onclick="toggleStop(this)">+ Details</button>
+        </article>
+
+        <article class="stop home">
+            <div class="stop-num">↩</div>
+            <div class="stop-content">
+                <div class="stop-city">Stuttgart</div>
+                <div class="stop-country">Heimflug</div>
+                <div class="stop-transport">
+                    <span class="transport-line"></span>
+                    ✈️ Flug ab Bangkok
+                </div>
+            </div>
+            <div class="stop-meta">
+                <div class="stop-dates">27 Aug</div>
+                <div class="stop-nights">Ende</div>
+            </div>
+            <div class="stop-details">
+                <div class="button-group">
+                    <a href="#" class="action-btn">🎫 Rückflugticket</a>
+                </div>
+            </div>
+            <button class="expand-btn" onclick="toggleStop(this)">+ Details</button>
+        </article>
+
     </div>
 
-    <!-- HIER WEITERE CARDS ANALOG EINFÜGEN (MALACCA, SINGAPUR ETC.) -->
-    <!-- (Aus Platzgründen gekürzt, das Prinzip bleibt für alle Blöcke gleich) -->
+    <blockquote class="quote">
+        „Wir reisen nicht, um zu fliehen — wir reisen, damit das Leben uns nicht entgeht."
+        <span class="author">Reisetagebuch · 2026</span>
+    </blockquote>
 
-    <div class="transit"><span style="font-size:24px">🚤</span><div><strong>7. Aug · Transfer nach Tioman</strong><div style="font-size:12px; color:#666">Bus nach Mersing + Speedboat</div></div></div>
-
-    <div class="footer">
-        <div style="font-size:24px; margin-bottom:10px">🌏</div>
-        <strong>26 Tage · 6 Destinationen · 3 Länder</strong><br>
-        2. August – 27. August 2026<br>
-        <span style="opacity:0.6; font-size:12px">Mit Liebe geplant für Finn & Smilla</span>
-    </div>
-</div>
+</main>
 
 <script>
-function tog(id, color, accent) {
-    var body = document.getElementById('B-' + id);
-    var arrow = document.getElementById('A-' + id);
-    var card = document.getElementById('D-' + id);
-    var isOpen = body.style.display === 'block';
-    
-    body.style.display = isOpen ? 'none' : 'block';
-    arrow.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-    card.style.transform = isOpen ? 'scale(1)' : 'scale(1.02)';
-    card.style.boxShadow = isOpen ? '0 4px 15px rgba(0,0,0,0.05)' : '0 12px 30px rgba(0,0,0,0.15)';
-}
-
-function sw(id, which, color) {
-    ['t','a'].forEach(function(tab) {
-        var tc = document.getElementById('TC-' + id + '-' + tab);
-        var tb = document.getElementById('TB-' + id + '-' + tab);
-        if (tab === which) {
-            tc.classList.add('on'); tb.classList.add('on');
-            tb.style.color = color;
-        } else {
-            tc.classList.remove('on'); tb.classList.remove('on');
-            tb.style.color = '#999';
-        }
-    });
+function toggleStop(btn) {
+    const stop = btn.closest('.stop');
+    stop.classList.toggle('expanded');
+    btn.textContent = stop.classList.contains('expanded') ? '− Schließen' : '+ Details';
 }
 </script>
+
 </body>
 </html>
