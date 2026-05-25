@@ -32,7 +32,6 @@ body {
     background: #ffffff;
 }
 
-/* HEADER */
 header {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     color: white;
@@ -127,7 +126,6 @@ h1 {
     font-weight: 500;
 }
 
-/* MAIN */
 main {
     max-width: 1100px;
     margin: 0 auto;
@@ -153,7 +151,6 @@ main {
     letter-spacing: 1px;
 }
 
-/* TIMELINE */
 .timeline {
     position: relative;
     display: grid;
@@ -177,7 +174,6 @@ main {
     .timeline::before { left: 20px; }
 }
 
-/* STOP CARDS */
 .stop {
     background: #fff;
     border-radius: 20px;
@@ -224,6 +220,8 @@ main {
     object-fit: cover;
     display: block;
     transition: transform 0.6s ease;
+    position: relative;
+    z-index: 2;
 }
 
 .stop:hover .stop-image { transform: scale(1.05); }
@@ -240,6 +238,7 @@ main {
     text-shadow: 0 4px 20px rgba(0,0,0,0.3);
     letter-spacing: 2px;
     background: linear-gradient(135deg, var(--primary) 0%, var(--accent-dark) 100%);
+    z-index: 1;
 }
 
 .stop-content { padding: 48px; }
@@ -318,7 +317,6 @@ main {
     display: block;
 }
 
-/* DOCUMENT SLOTS */
 .documents {
     margin-top: 28px;
 }
@@ -380,9 +378,7 @@ main {
     flex-shrink: 0;
 }
 
-.doc-slot-text {
-    min-width: 0;
-}
+.doc-slot-text { min-width: 0; }
 
 .doc-slot-label {
     font-size: 0.95rem;
@@ -414,7 +410,6 @@ main {
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -424,6 +419,7 @@ main {
     background: white;
     color: var(--text-light);
     border: 1px solid var(--border);
+    text-decoration: none;
 }
 
 .doc-btn:hover {
@@ -437,7 +433,6 @@ main {
     border-color: var(--danger);
 }
 
-/* QUOTE */
 .quote-section {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     border-radius: 20px;
@@ -489,7 +484,6 @@ footer {
     border-top: 1px solid rgba(212, 165, 116, 0.15);
 }
 
-/* ANIMATIONS */
 @keyframes slideUp {
     from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }
@@ -508,7 +502,6 @@ footer {
 .stop:nth-child(6) { animation-delay: 0.6s; }
 .stop:nth-child(7) { animation-delay: 0.7s; }
 
-/* TOAST */
 .toast {
     position: fixed;
     bottom: 30px;
@@ -532,7 +525,6 @@ footer {
 .toast.success { border-color: var(--success); }
 .toast.error { border-color: var(--danger); }
 
-/* RESET BUTTON */
 .reset-all {
     position: fixed;
     bottom: 20px;
@@ -586,9 +578,7 @@ footer {
         <p>02. August — 27. August 2026</p>
     </div>
 
-    <div class="timeline" id="timeline">
-        <!-- Stops werden via JavaScript gerendert -->
-    </div>
+    <div class="timeline" id="timeline"></div>
 
     <div class="quote-section">
         <p class="quote-text">„Wir reisen nicht, um zu fliehen — wir reisen, damit das Leben uns nicht entgeht."</p>
@@ -600,12 +590,14 @@ footer {
     <p>✈️ Eine Reise durch Südostasien · August 2026 · Made with ❤️</p>
 </footer>
 
-<button class="reset-all" onclick="resetAll()">🗑️ Alle PDFs löschen</button>
+<button class="reset-all" onclick="resetAll()">🗑️ Lokale Uploads löschen</button>
 
 <div class="toast" id="toast"></div>
 
 <script>
 // ============= STOP DATA =============
+// Wenn ein doc-Eintrag eine "file"-Eigenschaft hat, wird er als fester Link
+// zum PDF im Repo gerendert. Sonst zeigt er einen lokalen Upload-Slot.
 const stops = [
     {
         id: 1,
@@ -614,10 +606,10 @@ const stops = [
         transport: '✈️ Flug ab München (MUC)',
         dates: '02. Aug — 05. Aug (3 Nächte)',
         hotel: 'The Majestic Hotel',
-        image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f11?w=900&h=320&fit=crop&q=85',
+        image: 'images/01-kuala-lumpur.jpg',
         fallback: 'KL',
         docs: [
-            { key: 'flug', label: '✈️ Flugticket MUC → KUL', icon: '🎫' },
+            { key: 'flug', label: '✈️ Flugticket MUC → KUL', icon: '🎫', file: 'pdfs/MUC-KUL_Flug.pdf' },
             { key: 'hotel', label: '🏨 Hotel-Buchung', icon: '🛏️' }
         ]
     },
@@ -628,10 +620,10 @@ const stops = [
         transport: '🚌 Bus ab Kuala Lumpur',
         dates: '05. Aug — 07. Aug (2 Nächte)',
         hotel: 'Historic City Hotel',
-        image: 'https://images.unsplash.com/photo-1591537683203-e29509b2c64f?w=900&h=320&fit=crop&q=85',
+        image: 'images/02-malacca.jpg',
         fallback: 'Malacca',
         docs: [
-            { key: 'hotel', label: '🏨 Hotel-Buchung', icon: '🛏️' },
+            { key: 'hotel', label: '🏨 Hotel-Buchung', icon: '🛏️', file: 'pdfs/Malakka_Hotel.pdf' },
             { key: 'bus', label: '🚌 Busticket KL → Malacca', icon: '🎫' }
         ]
     },
@@ -642,7 +634,7 @@ const stops = [
         transport: '🚌 Bus + ⛴️ Fähre ab Mersing',
         dates: '07. Aug — 11. Aug (4 Nächte)',
         hotel: 'Paya Beach Spa & Dive Resort',
-        image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&h=320&fit=crop&q=85',
+        image: 'images/03-tioman.jpg',
         fallback: 'Tioman',
         docs: [
             { key: 'resort', label: '🏝️ Resort-Buchung', icon: '🛏️' },
@@ -657,11 +649,11 @@ const stops = [
         transport: '⛴️ Fähre + 🚌 Bus ab Mersing',
         dates: '11. Aug — 17. Aug (6 Nächte)',
         hotel: '150 Cantonment Road',
-        image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=900&h=320&fit=crop&q=85',
+        image: 'images/04-singapore.jpg',
         fallback: 'Singapore',
         docs: [
             { key: 'bus', label: '🚌 Busticket Mersing → SG', icon: '🎫' },
-            { key: 'hotel', label: '🏨 Hotel-Buchung', icon: '🛏️' }
+            { key: 'hotel', label: '🏨 Hotel-Buchung', icon: '🛏️', file: 'pdfs/Singapur_Hotel.pdf' }
         ]
     },
     {
@@ -671,11 +663,11 @@ const stops = [
         transport: '✈️ Flug ab Singapore (SIN)',
         dates: '17. Aug — 24. Aug (7 Nächte)',
         hotel: 'Beach Resort Chaweng',
-        image: 'https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=900&h=320&fit=crop&q=85',
+        image: 'images/05-koh-samui.jpg',
         fallback: 'Koh Samui',
         docs: [
-            { key: 'flug', label: '✈️ Flugticket SIN → USM', icon: '🎫' },
-            { key: 'hotel', label: '🏨 Resort-Buchung', icon: '🛏️' }
+            { key: 'flug', label: '✈️ Flugticket SIN → USM', icon: '🎫', file: 'pdfs/SIN-USM_Flug.pdf' },
+            { key: 'hotel', label: '🏨 Resort-Buchung', icon: '🛏️', file: 'pdfs/KohSamui_Hotel.pdf' }
         ]
     },
     {
@@ -685,10 +677,10 @@ const stops = [
         transport: '✈️ Flug ab Koh Samui (USM)',
         dates: '24. Aug — 27. Aug (3 Nächte)',
         hotel: 'Sukhumvit Boutique Hotel',
-        image: 'https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=900&h=320&fit=crop&q=85',
+        image: 'images/06-bangkok.jpg',
         fallback: 'Bangkok',
         docs: [
-            { key: 'flug', label: '✈️ Flugticket USM → BKK', icon: '🎫' },
+            { key: 'flug', label: '✈️ Flugticket USM → BKK', icon: '🎫', file: 'pdfs/USM-BKK_Flug.pdf' },
             { key: 'hotel', label: '🏨 Hotel-Buchung', icon: '🛏️' }
         ]
     },
@@ -699,16 +691,15 @@ const stops = [
         transport: '✈️ Flug ab Bangkok (BKK)',
         dates: '27. August 2026',
         hotel: 'Zuhause',
-        image: 'https://images.unsplash.com/photo-1599982017636-b4d59f0c4036?w=900&h=320&fit=crop&q=85',
+        image: 'images/07-stuttgart.jpg',
         fallback: 'Stuttgart',
         docs: [
-            { key: 'rueckflug', label: '✈️ Rückflugticket BKK → STR', icon: '🎫' }
+            { key: 'rueckflug', label: '✈️ Rückflugticket BKK → STR', icon: '🎫', file: 'pdfs/BKK-STR_Flug.pdf' }
         ]
     }
 ];
 
-// ============= INDEXEDDB SETUP =============
-// IndexedDB ist nötig, weil localStorage nur 5MB hat und PDFs schnell größer sind.
+// ============= INDEXEDDB SETUP (nur für lokale Uploads) =============
 const DB_NAME = 'travelDocsDB';
 const DB_VERSION = 1;
 const STORE_NAME = 'documents';
@@ -807,45 +798,64 @@ function renderTimeline() {
                 <div class="documents">
                     <div class="documents-title">📎 Dokumente</div>
                     <div class="doc-slots">
-                        ${stop.docs.map(doc => `
-                            <div class="doc-slot" id="slot-${stop.id}-${doc.key}" data-stop="${stop.id}" data-key="${doc.key}">
-                                <div class="doc-slot-info" onclick="handleSlotClick(${stop.id}, '${doc.key}')">
-                                    <span class="doc-icon">${doc.icon}</span>
-                                    <div class="doc-slot-text">
-                                        <div class="doc-slot-label">${doc.label}</div>
-                                        <div class="doc-slot-status">Klicken zum Hochladen</div>
-                                    </div>
-                                </div>
-                                <div class="doc-actions" id="actions-${stop.id}-${doc.key}"></div>
-                                <input type="file" 
-                                       id="input-${stop.id}-${doc.key}" 
-                                       accept=".pdf,image/*"
-                                       style="display:none"
-                                       onchange="handleFileUpload(event, ${stop.id}, '${doc.key}')">
-                            </div>
-                        `).join('')}
+                        ${stop.docs.map(doc => renderDocSlot(stop.id, doc)).join('')}
                     </div>
                 </div>
             </div>
         </article>
     `).join('');
     
-    // Bilder-Fallback: Wenn Image-Tag versteckt wird, bleibt der Fallback-Layer sichtbar
-    // Lade dann gespeicherte Dokument-Stati
-    loadAllDocStates();
+    loadAllLocalDocs();
 }
 
-// ============= UPLOAD HANDLER =============
+function renderDocSlot(stopId, doc) {
+    // Fall A: festes PDF aus dem Repo
+    if (doc.file) {
+        return `
+            <a href="${doc.file}" target="_blank" class="doc-slot has-file" style="text-decoration:none">
+                <div class="doc-slot-info">
+                    <span class="doc-icon">${doc.icon}</span>
+                    <div class="doc-slot-text">
+                        <div class="doc-slot-label">${doc.label}</div>
+                        <div class="doc-slot-status">✓ Im Repo gespeichert · Klick zum Öffnen</div>
+                    </div>
+                </div>
+                <div class="doc-actions">
+                    <a href="${doc.file}" target="_blank" class="doc-btn" title="Öffnen" onclick="event.stopPropagation()">👁️</a>
+                    <a href="${doc.file}" download class="doc-btn" title="Download" onclick="event.stopPropagation()">⬇️</a>
+                </div>
+            </a>
+        `;
+    }
+    
+    // Fall B: leerer Slot für lokalen Upload
+    return `
+        <div class="doc-slot" id="slot-${stopId}-${doc.key}" data-stop="${stopId}" data-key="${doc.key}">
+            <div class="doc-slot-info" onclick="handleSlotClick(${stopId}, '${doc.key}')">
+                <span class="doc-icon">${doc.icon}</span>
+                <div class="doc-slot-text">
+                    <div class="doc-slot-label">${doc.label}</div>
+                    <div class="doc-slot-status">Klicken zum lokalen Hochladen</div>
+                </div>
+            </div>
+            <div class="doc-actions" id="actions-${stopId}-${doc.key}"></div>
+            <input type="file" 
+                   id="input-${stopId}-${doc.key}" 
+                   accept=".pdf,image/*"
+                   style="display:none"
+                   onchange="handleFileUpload(event, ${stopId}, '${doc.key}')">
+        </div>
+    `;
+}
+
 function handleSlotClick(stopId, key) {
-    const fileInput = document.getElementById(`input-${stopId}-${key}`);
-    fileInput.click();
+    document.getElementById(`input-${stopId}-${key}`).click();
 }
 
 async function handleFileUpload(event, stopId, key) {
     const file = event.target.files[0];
     if (!file) return;
     
-    // Größencheck (max 50 MB pro Datei)
     if (file.size > 50 * 1024 * 1024) {
         showToast('Datei zu groß (max. 50 MB)', 'error');
         return;
@@ -854,18 +864,17 @@ async function handleFileUpload(event, stopId, key) {
     try {
         const storeKey = `stop_${stopId}_${key}`;
         await saveDoc(storeKey, file, file.name);
-        await updateSlot(stopId, key);
+        await updateLocalSlot(stopId, key);
         showToast(`✓ ${file.name} hochgeladen`, 'success');
     } catch (err) {
         console.error(err);
         showToast('Fehler beim Speichern', 'error');
     }
     
-    // Input zurücksetzen für erneuten Upload derselben Datei
     event.target.value = '';
 }
 
-async function updateSlot(stopId, key) {
+async function updateLocalSlot(stopId, key) {
     const storeKey = `stop_${stopId}_${key}`;
     const slot = document.getElementById(`slot-${stopId}-${key}`);
     const actions = document.getElementById(`actions-${stopId}-${key}`);
@@ -876,32 +885,31 @@ async function updateSlot(stopId, key) {
     
     if (data && data.blob) {
         slot.classList.add('has-file');
-        slot.querySelector('.doc-slot-status').textContent = `✓ ${data.filename}`;
+        slot.querySelector('.doc-slot-status').textContent = `✓ ${data.filename} (lokal)`;
         
         actions.innerHTML = `
-            <button class="doc-btn" onclick="event.stopPropagation(); openDoc(${stopId}, '${key}')" title="Öffnen">👁️</button>
-            <button class="doc-btn" onclick="event.stopPropagation(); downloadDoc(${stopId}, '${key}')" title="Download">⬇️</button>
-            <button class="doc-btn delete" onclick="event.stopPropagation(); removeDoc(${stopId}, '${key}')" title="Löschen">🗑️</button>
+            <button class="doc-btn" onclick="event.stopPropagation(); openLocalDoc(${stopId}, '${key}')" title="Öffnen">👁️</button>
+            <button class="doc-btn" onclick="event.stopPropagation(); downloadLocalDoc(${stopId}, '${key}')" title="Download">⬇️</button>
+            <button class="doc-btn delete" onclick="event.stopPropagation(); removeLocalDoc(${stopId}, '${key}')" title="Löschen">🗑️</button>
         `;
     } else {
         slot.classList.remove('has-file');
-        slot.querySelector('.doc-slot-status').textContent = 'Klicken zum Hochladen';
+        slot.querySelector('.doc-slot-status').textContent = 'Klicken zum lokalen Hochladen';
         actions.innerHTML = '';
     }
 }
 
-async function openDoc(stopId, key) {
+async function openLocalDoc(stopId, key) {
     const storeKey = `stop_${stopId}_${key}`;
     const data = await getDoc(storeKey);
     if (data && data.blob) {
         const url = URL.createObjectURL(data.blob);
         window.open(url, '_blank');
-        // URL nach kurzer Zeit freigeben
         setTimeout(() => URL.revokeObjectURL(url), 60000);
     }
 }
 
-async function downloadDoc(stopId, key) {
+async function downloadLocalDoc(stopId, key) {
     const storeKey = `stop_${stopId}_${key}`;
     const data = await getDoc(storeKey);
     if (data && data.blob) {
@@ -916,30 +924,32 @@ async function downloadDoc(stopId, key) {
     }
 }
 
-async function removeDoc(stopId, key) {
+async function removeLocalDoc(stopId, key) {
     if (!confirm('Diese Datei wirklich löschen?')) return;
     const storeKey = `stop_${stopId}_${key}`;
     await deleteDoc(storeKey);
-    await updateSlot(stopId, key);
+    await updateLocalSlot(stopId, key);
     showToast('Datei gelöscht', 'success');
 }
 
-async function loadAllDocStates() {
+async function loadAllLocalDocs() {
     for (const stop of stops) {
         for (const doc of stop.docs) {
-            await updateSlot(stop.id, doc.key);
+            // Nur Slots ohne festes PDF
+            if (!doc.file) {
+                await updateLocalSlot(stop.id, doc.key);
+            }
         }
     }
 }
 
 async function resetAll() {
-    if (!confirm('Wirklich ALLE hochgeladenen Dokumente löschen?')) return;
+    if (!confirm('Wirklich ALLE lokal hochgeladenen Dokumente löschen? (PDFs im Repo bleiben.)')) return;
     await clearAllDocs();
-    await loadAllDocStates();
-    showToast('Alle Dateien gelöscht', 'success');
+    await loadAllLocalDocs();
+    showToast('Lokale Dateien gelöscht', 'success');
 }
 
-// ============= TOAST =============
 function showToast(message, type = 'success') {
     const toast = document.getElementById('toast');
     toast.textContent = message;
@@ -947,7 +957,6 @@ function showToast(message, type = 'success') {
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ============= INIT =============
 document.addEventListener('DOMContentLoaded', () => {
     renderTimeline();
 });
